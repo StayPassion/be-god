@@ -1,0 +1,15 @@
+{
+  "parameters": {
+    "clNo": "",
+    "vkhNo": "",
+    "vkhName": "",
+    "legalEntitys": [],
+    "divisions": [],
+    "endValidPeriod": "",
+    "startValidPeriod": "",
+    "responsible": "",
+    "pageNumber": 1,
+    "pageSize": 10
+  },
+  "type": "RA_OPEN_VKH_LIST"
+}
