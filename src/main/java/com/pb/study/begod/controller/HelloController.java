@@ -1,11 +1,18 @@
 package com.pb.study.begod.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.pb.study.begod.domain.dto.ArticleDto;
+import com.pb.study.begod.entity.Article;
+import com.pb.study.begod.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -17,6 +24,7 @@ import java.util.concurrent.TimeoutException;
  */
 
 @RestController
+@CacheConfig(cacheNames = {"memberService"})
 public class HelloController {
 
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
@@ -95,4 +103,10 @@ public class HelloController {
         return new WebAsyncTask<>(20000, callable);
     }
 
+    @PostMapping("/test")
+    public void testAA(@RequestBody ArticleDto articleDto) {
+
+        logger.info("{}",articleDto);
+
+    }
 }

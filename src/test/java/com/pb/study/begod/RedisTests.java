@@ -7,19 +7,21 @@ import com.pb.study.begod.entity.Article;
 import com.pb.study.begod.kafka.CustomProducerListener;
 import com.pb.study.begod.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Throwables;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -121,6 +123,40 @@ class RedisTests {
         System.out.println(delete);
     }
 
+    @Autowired
+    @Qualifier("projectBatch")
+    private ThreadPoolTaskExecutor executor;
+
+
+    @Test
+    public void test33() throws InterruptedException {
+        CompletableFuture<Integer> voidCompletableFuture1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("11111");
+            return 234;
+        }, executor);
+        CompletableFuture<Integer> voidCompletableFuture2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("222");
+            return 222;
+        }, executor);
+//        CompletableFuture<Void> voidCompletableFuture3 = CompletableFuture.runAsync(() -> {
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println("333");
+//        }, executor);
+        CompletableFuture.allOf(voidCompletableFuture1,voidCompletableFuture2);
+        log.info("----{}",voidCompletableFuture1.join()+"##"+voidCompletableFuture2.join());
+
+        Thread.sleep(6000);
+
+    }
 
 
 }

@@ -5,6 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,9 +47,10 @@ public class Article implements Serializable {
     @ExcelProperty("Money")
     private BigDecimal money;
 
+    @JsonIgnore
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDate;
-
+    @JsonIgnore
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateDate;
 
