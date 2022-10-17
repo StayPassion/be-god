@@ -1,6 +1,7 @@
 package com.pb.study.begod.controller;
 
 import com.pb.study.begod.domain.dto.MdmProjectMainTemp;
+import com.pb.study.begod.log.SysLog;
 import com.pb.study.begod.validation.Land;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.Set;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@SysLog
 public class ValidationController {
 
     private final Validator validator;
